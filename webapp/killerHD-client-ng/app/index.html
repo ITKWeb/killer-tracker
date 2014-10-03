@@ -24,12 +24,12 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#/createForfeit">Create forfeit</a></li>
+          <li><a ng-href="#/createForfeit">Create forfeit</a></li>
           <li><a ng-href="#/launchGame">Launch game</a></li>
           <li><a ng-href="#/validDeath">Valid your death</a></li>
 		  <li><a ng-href="#/gameState">Game state</a></li>
         </ul>
-        <h3 class="text-muted">Killer-Tracker</h3>
+        <h3 class="text-muted"><a ng-href="#/">Killer-Tracker</a></h3>
       </div>
 
       <div ng-view=""></div>
@@ -76,6 +76,7 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
 		<script src="scripts/controllers/gameState.js"></script>
+		<script src="scripts/controllers/gameStateSrv.js"></script>
 		<script src="scripts/controllers/launchGame.js"></script>
 		<script src="scripts/controllers/createForfeit.js"></script>
 		<script src="scripts/controllers/validDeath.js"></script>
