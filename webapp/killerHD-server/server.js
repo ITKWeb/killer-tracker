@@ -21,7 +21,7 @@ app.use(function*(next){
     console.log("[INFO] ending serving");    
 });
 
-app.use(serve(path.resolve(__dirname, '../killerHD-client-ng/')));
+app.use(serve(path.resolve(__dirname, '../killerHD-client-ng/app')));
 
 app.listen(port);
 
