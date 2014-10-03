@@ -1,0 +1,13 @@
+{
+  "name": "killer",
+  "description": "A killer web app",
+  "author": "Flusin TheBoss",
+  "dependencies": {
+    "mysql": "2.5.1",
+    "socket.io": "1.1.0"
+  },
+  "engine": "node >= 0.11.3",
+  "scripts": {
+    "run": "node server.js"
+  }
+}
