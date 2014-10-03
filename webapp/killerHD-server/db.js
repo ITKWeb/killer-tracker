@@ -1,5 +1,6 @@
 'use strict';
 
+<<<<<<< HEAD
 var mysql = require("mysql");
 
 var connection = mysql.createConnection({
@@ -8,31 +9,47 @@ var connection = mysql.createConnection({
     password : 'itkkiller',
     database: 'itkkiller'
 });
+=======
+var rethink = require("rethinkdb"),
+    bluebird = require("bluebird");
+>>>>>>> # 0.3 passage a rethinkdb, parce qu'on le vaut bien
 
+var conf = {
+    host: "localhost",
+    port: 28015,
+    authKey: "",
+    db: "killerHD"
+};
 
-var connect = function() {
-    connection.connect(function(err) {
-        if(err){
-            console.log("[ERROR] \t ...Mysql connection FAILED.");
-        }else{
-            console.log("[INFO] \t ...Mysql connected.");
-        }
+var connect = function connect() {
+    return rethink.connect(conf).then(function(conn){
+        console.log(conn);
+        return conn;
     });
 };
 
-var insertPlayer = function(playerSet){
-    var query = connection.query('INSERT INTO Player SET ?', playerSet, function(err, result) {
-        if(err){
-            console.log("[ERROR] Error during insertPlayer query :");
-            console.log(err);
-        }else{
-            console.log('[INFO] Inserted player ' + playerSet.name);
-        }
-    });
+var savePlayers = function savePlayers(playerSet){
+    console.log(playerSet);
+    if(!Array.isArray(playerSet)){
+        playerSet = [playerSet];
+    }
+    
+    var conn = connect();
+    conn.then(function (conn){
+        console.log(playerSet);
+        playerSet.forEach( function (data){
+            rethink.table('Player').insert(data).run(conn);
+        });
+    }).done();
 };
 
 module.exports = {
     connect: connect,
-    insertPlayer: insertPlayer,
+    savePlayers: savePlayers,
 };
 
+/*
+        db.connect().bind(this);
+        for (var i = 0; i < data.length; i++) {
+            db.insertPlayer(data[i]);
+        }*/

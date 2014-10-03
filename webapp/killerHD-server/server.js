@@ -33,18 +33,10 @@ var server = http.Server(app.callback()),
 ioserver.on('connection', function(socket) {
     console.log("[INFO] \t... Incoming connection");
     socket.on('save_player', function(data) {
-        for (var i = 0; i < data.length; i++) {
-            db.insertPlayer(data[i]);
-        }
+        db.savePlayers(data);
     });
 });
 
 server.listen(++port);
 
 console.log("[INFO] \t... Socket connections at http://localhost:" + port + "/");
-
-
-console.log("[INFO] \t ...Listening on websockets.");
-
-console.log("[INFO] Connecting to Mysql...");
-db.connect();
