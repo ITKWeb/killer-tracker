@@ -12,7 +12,8 @@ numberPlayerInput.onchange = function() {
     updateNumberPlayer(numberPlayerInput.value);
 };
 
-var socket = io.connect();
+var port = parseInt(window.document.location.port)+1;
+var socket = io.connect('http://127.0.0.1:'+port);
 
 addPlayerButton.onclick = function () {
     addPlayer();

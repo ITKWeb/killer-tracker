@@ -1,13 +1,15 @@
 {
-  "name": "killer",
-  "description": "A killer web app",
+  "name": "killer-tracker",
+  "description": "A Killer web app",
   "author": "Flusin TheBoss",
   "dependencies": {
+    "koa": "0.12.2",
+    "koa-static": " 1.4.7",
     "mysql": "2.5.1",
     "socket.io": "1.1.0"
   },
   "engine": "node >= 0.11.3",
   "scripts": {
-    "run": "node server.js"
+    "start": "node --harmony server.js 8889"
   }
 }

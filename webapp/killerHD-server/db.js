@@ -18,7 +18,7 @@ var connect = function() {
             console.log("[INFO] \t ...Mysql connected.");
         }
     });
-}
+};
 
 var insertPlayer = function(playerSet){
     var query = connection.query('INSERT INTO Player SET ?', playerSet, function(err, result) {
@@ -29,7 +29,7 @@ var insertPlayer = function(playerSet){
             console.log('[INFO] Inserted player ' + playerSet.name);
         }
     });
-}
+};
 
 module.exports = {
     connect: connect,
