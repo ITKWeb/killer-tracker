@@ -4,8 +4,8 @@ var koa = require('koa'),
     http = require('http'),
     path = require("path"),
     io = require('socket.io'),
-    db = require('./db.js');
-
+    db = require('./db.js'),
+    Mail = require('./mail.js');
 
 var port = process.argv[2] || 8888;
 
@@ -40,3 +40,10 @@ ioserver.on('connection', function(socket) {
 server.listen(++port);
 
 console.log("[INFO] \t... Socket connections at http://localhost:" + port + "/");
+
+console.log("[INFO] \t ...Listening on websockets.");
+
+console.log("[INFO] Sending test mail");
+
+/*var mail = new Mail({to:'etienne.molto@itkweb.com', subject:'test', text:'test'});
+mail.send();*/

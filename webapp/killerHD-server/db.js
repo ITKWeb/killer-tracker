@@ -1,18 +1,7 @@
 'use strict';
 
-<<<<<<< HEAD
-var mysql = require("mysql");
-
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'itkkiller',
-    password : 'itkkiller',
-    database: 'itkkiller'
-});
-=======
 var rethink = require("rethinkdb"),
     bluebird = require("bluebird");
->>>>>>> # 0.3 passage a rethinkdb, parce qu'on le vaut bien
 
 var conf = {
     host: "localhost",
@@ -47,9 +36,3 @@ module.exports = {
     connect: connect,
     savePlayers: savePlayers,
 };
-
-/*
-        db.connect().bind(this);
-        for (var i = 0; i < data.length; i++) {
-            db.insertPlayer(data[i]);
-        }*/
