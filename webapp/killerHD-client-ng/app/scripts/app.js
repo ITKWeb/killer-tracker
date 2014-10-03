@@ -27,6 +27,22 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+	  .when('/launchGame', {
+        templateUrl: 'views/launchGame.html',
+        controller: 'LaunchGameCtrl'
+      })
+	  .when('/createForfeit', {
+        templateUrl: 'views/createForfeit.html',
+        controller: 'CreateForfeitCtrl'
+      })
+	  .when('/gameState', {
+        templateUrl: 'views/gameState.html',
+        controller: 'GameStateCtrl'
+      })
+	  .when('/validDeath', {
+        templateUrl: 'views/validDeath.html',
+        controller: 'ValidDeathCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
