@@ -1,3 +1,18 @@
-<div class="container">
-{{title}}
+<div  style="font-weight:bold">
+	{{title}}
+</div>
+
+<div>
+	
+	<div ng-repeat="player in players">
+		Player nickname: <input type="text" value="{{player.nickname}}"> 
+		Player email:<input type="text" value="{{player.email}}">
+		<button ng-click="add(player)" ng-hide="player.isAdded">ADD</button>
+		<button ng-click="remove($index)" ng-show="player.isAdded">REMOVE </button>
+	</div>
+
+</div>
+
+<div class="center buttons">
+    <input id="start-button" type="button" value="START GAME"/>
 </div>
