@@ -94,7 +94,11 @@ function updateNumberPlayer(numberPlayer){
 
 var saveButton = document.getElementById('save-button');
 saveButton.onclick = function(){
-    socket.emit('save_player', getPlayersSets());
+    var obj = {
+        startDate: "10/01/2010",
+        players: getPlayersSets()
+    };
+    socket.emit('new_game', obj);
 };
 
 function getPlayersSets() {

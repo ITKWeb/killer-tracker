@@ -32,8 +32,11 @@ var server = http.Server(app.callback()),
 
 ioserver.on('connection', function(socket) {
     console.log("[INFO] \t... Incoming connection");
-    socket.on('save_player', function(data) {
-        db.savePlayers(data);
+    socket.on('new_game', function(data) {
+        db.createNewGame(data);
+    });
+    socket.on('new_forfeits', function(data) {
+        db.saveForfeits(data);
     });
 });
 
@@ -43,7 +46,6 @@ console.log("[INFO] \t... Socket connections at http://localhost:" + port + "/")
 
 console.log("[INFO] \t ...Listening on websockets.");
 
-console.log("[INFO] Sending test mail");
-
-/*var mail = new Mail({to:'etienne.molto@itkweb.com', subject:'test', text:'test'});
+/*console.log("[INFO] Sending test mail");
+var mail = new Mail({to:'etienne.molto@itkweb.com', subject:'test', text:'test'});
 mail.send();*/
