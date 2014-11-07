@@ -51,6 +51,20 @@ var saveForfeits = function saveForfeits(data){
     }).done();
 };
 
+var getPlayers = function getPlayers(gameId){
+    var conn = connect();
+    conn.then(function (conn){
+        return rethink.table('Player').filter({game_id: gameId}).run(conn);
+    }).done();
+}
+
+var getForfeits = function getForfeits(){
+    var conn = connect();
+    conn.then(function (conn){
+        return rethink.table('Forfeit').run(conn);
+    }).done();
+}
+
 module.exports = {
     createNewGame: createNewGame,
     saveForfeits: saveForfeits
