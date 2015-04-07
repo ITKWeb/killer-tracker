@@ -8,20 +8,19 @@
 angular.module('killerTrackerNgApp').controller('GameStateCtrl',  [
 	'$scope', '$log', 'gameStateSrv',
 function ($scope, $log, gameStateSrv) {
+          
+    //Ugly !!!  
+    var port = parseInt(window.document.location.port) + 1;
+    var socket = io.connect('http://127.0.0.1:' + port);
     
-	'use strict';
-	
-	var player = {
-		email: ''
-	};
-
-	$scope.title = 'Game State';
-	$scope.player = player;
-	
-	
-	$scope.showMeGameState = function () {
-		$scope.missions = gameStateSrv.showMeGameState(player.email);
-    };
-	
+    socket.on('players', function(players) {
+        $scope.$apply(function() {
+            $scope.players = players;
+        });
+    });
+    
+    socket.emit('players_request');
+    
+    
   }
 ]);

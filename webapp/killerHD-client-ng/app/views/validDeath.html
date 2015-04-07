@@ -1,3 +1,13 @@
-<div class="container">
+<div style="font-weight:bold">
 {{title}}
 </div>
+
+<div ng-controller="ValidDeathCtrl">
+    After entering your email here, you will be taken out of the game and will not receive emails anymore.
+    Do not cheat by entering a email you don't own, or Zeus will bring thunder on your entire family.<br/><br/>
+    Email: <input type="text" ng-model="email" /> 
+    Password: <input type="text" ng-model="password" /> 
+    <button ng-click="validDeath(email, password)">I want to validate my death</button>
+</div>
+
+<script src="scripts/socket.io.js"></script>

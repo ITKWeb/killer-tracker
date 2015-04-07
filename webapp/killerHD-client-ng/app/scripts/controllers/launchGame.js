@@ -12,15 +12,16 @@ angular.module('killerTrackerNgApp')
     
     $scope.title = 'Launch Game';
 
-    $scope.players = [{}];
-    
-    console.log($scope.players);
+    $scope.players = [];  
+    $scope.newplayer = {};
 
-    $scope.add = function(player) {
-    	//console.log(newplayer.email);
-    	player.isAdded = true;
-    	$scope.players.push({}); 
-    	console.log($scope.players);
+    $scope.add = function(newplayer) {
+        var password = Math.floor(Math.random() * 10000000);
+        newplayer.password = password;
+        newplayer.alive = true;
+    	$scope.players.push(newplayer); 
+    	console.log(newplayer);
+        $scope.newplayer = {};
     };
 
     $scope.remove = function(index) {
@@ -28,6 +29,14 @@ angular.module('killerTrackerNgApp')
     	console.log('remove ' , index);
     	$scope.players.splice(index,1);
 		
+    };
+      
+          //Ugly !!!  
+    var port = parseInt(window.document.location.port) + 1;
+    var socket = io.connect('http://127.0.0.1:' + port);
+      
+    $scope.startGame = function startGame(){
+        socket.emit('new_game', $scope.players);  
     };
 
   }]);

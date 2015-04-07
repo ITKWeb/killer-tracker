@@ -1,29 +1,20 @@
-<div class="container">
+<div  style="font-weight:bold">
 <span>{{title}}</span>
-<form role="form" ng-submit="showMeGameState()">
-    <div class="row">
-      <div class="input-group">
-        <input type="text" ng-model="player.email" placeholder="Please, enter your email" class="form-control">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Show me game state">
-        </span>
-      </div>
+</div>
+
+
+<div ng-controller="GameStateCtrl">
+    <br><br>  
+    <span style="font-weight:bold">Alive Players</span>
+    <div ng-repeat="player in players">
+        <div ng-show="player.alive">{{player.name}}</div>    
     </div>
-</form>
-<br>
-<span ng-if="missions !== undefined">
-	<table width="100%">
-		<tr>
-			<th>Killer</th>
-			<th>Target</th>
-			<th>Forfeit</th>
-			<th>Status</th>
-		</tr>
-		<tr ng-repeat="mission in missions">
-			<td>{{mission.killer.email}}</td>
-			<td>{{mission.player.email}}</td>
-			<td>{{mission.forfeit.description}}</td>
-			<td>{{mission.status}}</td>
-		</tr>
-	</table>
-</span>
+    
+    <br><br>    
+    <span style="font-weight:bold">Dead Players</span>
+    <div ng-repeat="player in players">
+        <div ng-hide="player.alive">{{player.name}}</div>    
+    </div>
+</div>
+
+<script src="scripts/socket.io.js"></script>

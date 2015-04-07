@@ -4,15 +4,24 @@
 
 <div>
 	
-	<div ng-repeat="player in players">
+    <div>
+        Add player: </br>
+		Player nickname: <input type="text" ng-model="newplayer.nickname" value="{{newplayer.nickname}}"> 
+		Player email:<input type="text" ng-model="newplayer.email" value="{{newplayer.email}}">
+    <button ng-click="add(newplayer)">ADD</button>
+        </div>
+
+    Added players: </br>
+	<div ng-repeat="player in players track by $index">
 		Player nickname: <input type="text" value="{{player.nickname}}"> 
 		Player email:<input type="text" value="{{player.email}}">
-		<button ng-click="add(player)" ng-hide="player.isAdded">ADD</button>
-		<button ng-click="remove($index)" ng-show="player.isAdded">REMOVE </button>
+		<button ng-click="remove($index)">REMOVE </button>
 	</div>
 
 </div>
 
 <div class="center buttons">
-    <input id="start-button" type="button" value="START GAME"/>
+    <button ng-click="startGame()">START GAME</button>
 </div>
+
+<script src="scripts/socket.io.js"></script>

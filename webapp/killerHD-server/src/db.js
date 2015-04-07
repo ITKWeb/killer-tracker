@@ -38,34 +38,102 @@ var createNewGame = function createNewGame(data){
     }).done();
 };
 
-var saveForfeits = function saveForfeits(data){
+var saveForfeit = function saveForfeit(data){
+    
+    var conn = connect();
+    conn.then(function (conn){
+        return rethink.table('Forfeit').insert(data).run(conn);
+    }).done();
+};
+
+var saveMissions = function saveMissions(data){
     
     if(!Array.isArray(data)){
         data = [data];
     }
     var conn = connect();
     conn.then(function (conn){
-        data.forEach(function(forfeit) {
-            return rethink.table('Forfeit').insert(forfeit).run(conn);
+        data.forEach(function(mission) {
+            return rethink.table('Mission').insert(mission).run(conn);
         });
     }).done();
 };
 
 var getPlayers = function getPlayers(gameId){
     var conn = connect();
-    conn.then(function (conn){
-        return rethink.table('Player').filter({game_id: gameId}).run(conn);
-    }).done();
+    return conn.then(function (conn){
+        return rethink.table('Player').run(conn);
+    });
+}
+
+var getAlivePlayers = function getAlivePlayers(gameId){
+    var conn = connect();
+    return conn.then(function (conn){
+        return rethink.table('Player').filter({alive: true}).run(conn);
+    });
+}
+
+var getPlayer = function getPlayer(playerId){
+    var conn = connect();
+    return conn.then(function (conn){
+        return rethink.table('Player').filter({id: playerId}).run(conn);
+    });
 }
 
 var getForfeits = function getForfeits(){
     var conn = connect();
-    conn.then(function (conn){
+    return conn.then(function (conn){
         return rethink.table('Forfeit').run(conn);
-    }).done();
+    });
+}
+
+var getForfeit = function getForfeit(forfeitId){
+    var conn = connect();
+    return conn.then(function (conn){
+        return rethink.table('Forfeit').filter({id: forfeitId}).run(conn);
+    });
+}
+
+var getCurrentGame = function getCurrentGame(){
+    var conn = connect();
+    return conn.then(function (conn){
+        return rethink.table('Game').run(conn);
+    });
+}
+
+var validDeath = function validDeath(email, password){
+    console.log("Valid death query: ", email);
+    var conn = connect();
+    var promise = conn.then(function (conn){
+        return rethink.table('Player').filter({"email":email}).run(conn);
+    });
+    promise.then(function(cursor){
+        cursor.toArray(function(err, players){
+            var player = players[0];
+            if(err) throw err;
+            console.log("Got player:", player);
+            console.log("Checking passwords: ", player.password, password);
+            if(player.password == password){
+                console.log("Player has been slayed: ", email);
+                conn = connect();
+                return conn.then(function (conn){
+                    return rethink.table('Player').filter({"email":email}).update({"alive":"false"}).run(conn);
+                });
+            }
+        });
+    });
+
 }
 
 module.exports = {
     createNewGame: createNewGame,
-    saveForfeits: saveForfeits
+    saveForfeit: saveForfeit,
+    getCurrentGame: getCurrentGame,
+    getPlayers: getPlayers,
+    getAlivePlayers: getAlivePlayers,
+    getForfeits: getForfeits,
+    saveMissions: saveMissions,
+    getPlayer: getPlayer,
+    getForfeit: getForfeit,
+    validDeath: validDeath
 };

@@ -1,3 +1,11 @@
-<div class="container">
-{{title}}
+<div  style="font-weight:bold">
+	{{title}}
 </div>
+
+<div ng-controller="CreateForfeitCtrl">
+    Title: <input type="text" ng-model="forfeit.title" /> 
+    Forfeit description: <textarea ng-model="forfeit.description" />
+    <button ng-click="save(forfeit)">Save Forfeit</button>
+</div>
+
+<script src="scripts/socket.io.js"></script>

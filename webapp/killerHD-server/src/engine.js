@@ -1,21 +1,28 @@
 'use strict';
 
-var db = require('./db');
+var db = require('./db'),
+mailService = require('./mail_service');
 
 //next game step
 var nextStep = function nextStep(gameId){
-    
-    var players = db.getPlayers(gameId);
-    randomize(players);
-  
-    var forfeits = db.getForfeits();
-    var missions = buildMissions(players, forfeits);
-  // TODO
-    db.saveMissions(missions);
+    console.log("[INFO] Next step on Game of id: " + gameId);
+    db.getAlivePlayers(gameId).then(function(cursor){
+        cursor.toArray(function(err, players){
+            if(err) throw err;
+            randomize(players);
+            db.getForfeits().then(function(cursor){
+                cursor.toArray(function(err, forfeits){
+                    var missions = buildMissions(players, forfeits);
+                    db.saveMissions(missions);
+                    //should be done in server.js
+                    mailService.mailMissions(missions);
+                });
+            });
+        });
+    });
 };
-
+    
 var randomize = function randomize(players){
-  
     var nbPlayers = players.length;
     players.forEach(function (player, i){
       player.target = players[(i + 1) % nbPlayers];
@@ -60,10 +67,11 @@ var randomize = function randomize(players){
 
 var buildMissions = function buildMissions(players, forfeits){
     var missions = [];
+
     var forfeitsToPick = forfeits.slice(0);
     players.forEach(function(player) {
       //pick a random forfeit
-      var forfeit_index = Math.floor(Math.random() * players.forfeitsToPick);
+      var forfeit_index = Math.floor(Math.random() * forfeitsToPick.length);
       var forfeit = forfeitsToPick[forfeit_index];
       forfeitsToPick.splice(forfeit_index, 1);
       if(forfeitsToPick.length <= 0){
@@ -73,6 +81,7 @@ var buildMissions = function buildMissions(players, forfeits){
         {forfeit: forfeit.id, killer: player.id, player: player.target.id, status: 'PENDING'}
       );
     });
+    return missions;
 };
 
 module.exports = {
